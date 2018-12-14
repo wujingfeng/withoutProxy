@@ -74,8 +74,8 @@ if sys == 'Windows':
     REDIS_HOST = '127.0.0.1' # 也可以根据情况改成 localhost
     REDIS_PASSWORD = ''
 else:
-    REDIS_HOST = 'r-m5e416eab72ea714.redis.rds.aliyuncs.com'
-    REDIS_PASSWORD = 'JonQWE520'
+    REDIS_HOST = 'localhost'
+    REDIS_PASSWORD = ''
 REDIS_PORT = 6379
 DB = 11
 REDIS_PARAMS = {
