@@ -8,28 +8,35 @@ def gljs_ry_detail(response):
     print('-----gljs_ry_detail-----')
     html = response.text
     text = json.loads(html)
-    zid = text['rows'][0]['companyId']
-
-    data={
-        'page':'1',
-        'rows':'15',
-        'comId':zid,
-        'type':'0'
-    }
     rtn_data = {}
     data_list = []
     tmp_data = []
-    ye = text['pageObj']['maxPage']
-    for page in range(1,int(ye) + 1) :
-        print('page',page)
-        data['page'] = page
-        response = requests.post(url='http://glxy.mot.gov.cn/person/getPersonList.do', data=data)
+    if ('post_params' not in response.meta):
+        zid = text['rows'][0]['companyId']
+        ye = text['pageObj']['maxPage']
+        if ('form_requests' not in rtn_data):
+            rtn_data['form_requests'] = []
+            for page in range(1,int(ye) + 1):
+                response='http://glxy.mot.gov.cn/person/getPersonList.do'
+
+                rtn_data['form_requests'].append({
+                    'url': response,
+                    'post_params': {
+                        'page': str(page),
+                        'rows': '15',
+                        'comId': zid,
+                        'type': '0',
+                    }
+                })
+        return rtn_data
+    else:
+        print("第二次")
         html = response.text
         text = json.loads(html)
         for text in text['rows']:
             staff_id = text['id']
-
-            url = "http://glxy.mot.gov.cn/person/personInfo.do?perId="+text['id']+"&type=0"
+            zid = text['companyId']
+            url = "http://glxy.mot.gov.cn/person/personInfo.do?perId="+staff_id+"&type=0"
             gsmc = text['company']
             response = requests.get(url=url)
             html = response.text
@@ -45,7 +52,7 @@ def gljs_ry_detail(response):
             gljs_birth = conend['data']['birthDate'] # 出生日期
             gljs_ksgznf = conend['data']['majorStartDate'][0:4] # 开始工作年份
 
-            person_link = "http://glxy.mot.gov.cn/person/base.do?id="+text['id']+"&type=0&companyid="+zid+""
+            person_link = "http://glxy.mot.gov.cn/person/base.do?id="+staff_id+"&type=0&companyid="+zid+""
             gljs_type = '基本信息'
             xxly = '公路建设市场'
             jbxx_list = {
@@ -65,9 +72,10 @@ def gljs_ry_detail(response):
                 'staff_id':staff_id
             }
             zcxx_list = []
+
         #  职称信息
             zcxx = []
-            url = "http://glxy.mot.gov.cn/person/getPersonAcademicList.do?perId="+text['id']+""
+            url = "http://glxy.mot.gov.cn/person/getPersonAcademicList.do?perId="+staff_id+""
             response = requests.get(url=url)
             html = response.text
             conend = json.loads(html)
@@ -88,7 +96,7 @@ def gljs_ry_detail(response):
             zyzgxx_list = []
         # 执业资格信息
             zyzgxx = []
-            url = "http://glxy.mot.gov.cn/person/getPersonPracticeCertList.do?perId=" + text['id'] + ""
+            url = "http://glxy.mot.gov.cn/person/getPersonPracticeCertList.do?perId=" + staff_id + ""
             response = requests.get(url=url)
             html = response.text
             conend = json.loads(html)
@@ -111,7 +119,7 @@ def gljs_ry_detail(response):
         # 履历信息
             flxx_list = []
             flxx = []
-            url = "http://glxy.mot.gov.cn/person/getPersonRecordList.do?perId=" + text['id'] + ""
+            url = "http://glxy.mot.gov.cn/person/getPersonRecordList.do?perId=" + staff_id + ""
             response = requests.get(url=url)
             html = response.text
             conend = json.loads(html)
@@ -134,7 +142,7 @@ def gljs_ry_detail(response):
         # 个人业绩 gljs_gryj
             gryj_list = []
             gryj_list_list = []
-            url = "http://glxy.mot.gov.cn/person/getPersonAchieveList.do?perId=" + text['id'] + ""
+            url = "http://glxy.mot.gov.cn/person/getPersonAchieveList.do?perId=" + staff_id + ""
             response = requests.get(url=url)
             html = response.text
             conend = json.loads(html)

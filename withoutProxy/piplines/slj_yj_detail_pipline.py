@@ -1,3 +1,5 @@
+# 孙国强
+# 水利建设--业绩信息
 import time
 
 import pymysql
@@ -9,7 +11,7 @@ def slj_yj_detail_pipline(data):
         host=MYSQL_HOST,
         user=MYSQL_USER,
         password=MYSQL_PASSWORD,
-        db=MYSQLS_DB,
+        db=MYSQL_DB,
         charset=MYSQL_CHATSET,
         port=MYSQL_PORT,
         cursorclass = pymysql.cursors.DictCursor
@@ -81,15 +83,13 @@ def slj_yj_detail_pipline(data):
     for i in data['tjxx_list']:
         cursor.execute("select id from sc_gss_his where gsmc = %s", i['gsmc'])  # 查询公司表gs_id
         repetition = cursor.fetchone()
-        created = int(time.time())
-        modified = int(time.time())
         if repetition:
             gs_id = repetition['id']
         else:
             gs_id = 0
         # 统计信息
-        sql = "insert into slj_statistic(cj_id,gs_id,gsmc,p_type,s_type,total,created,modified) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-        par = [i['cj_id'], gs_id, i['gsmc'], i['p_type'], i['s_type'], i['total'],created, modified]
+        sql = "insert into slj_statistic(cj_id,gs_id,gsmc,p_type,s_type,total) VALUES (%s,%s,%s,%s,%s,%s)"
+        par = [i['cj_id'], gs_id, i['gsmc'], i['p_type'], i['s_type'], i['total']]
         cursor.execute(sql, par)
     conn.commit()
     cursor.close()

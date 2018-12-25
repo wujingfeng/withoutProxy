@@ -1,3 +1,5 @@
+# 孙国强
+# 水利建设--业绩信息
 import datetime
 import json
 import re
@@ -17,7 +19,6 @@ def slj_yj_detail(response):
         hj_list = []  # 获奖集合
         tjxx_list = []  # 统计集合
         r = requests.get(response.url).content
-        soup = BeautifulSoup(r, 'html.parser', from_encoding='utf-8')
         list = response.xpath('//*[@id="ulinfo"]/li')
         id = response.xpath('//*[@id="form1"]/@action').extract_first().split('=')[1]
         for li in list:
@@ -29,7 +30,7 @@ def slj_yj_detail(response):
                 url = 'http://rcpu.cwun.org/UInfo.aspx?id='+ id
                 r = requests.get(url).content
                 su = BeautifulSoup(r, 'html.parser', from_encoding='utf-8')
-                gsmc = su.find('span',id='ContentPlaceHolder1_lbUNCHNM').text
+                gsmc = su.find('span', id='ContentPlaceHolder1_lbUNCHNM').text
                 p_type = su.find('a', id='tab-proj').text
                 total = li.xpath('./a/span/text()').extract_first().strip().split('(')[1].split(')')[0]
                 lj = 'http://rcpu.cwun.org'+sgyj+id
@@ -56,17 +57,41 @@ def slj_yj_detail(response):
                                 if name == '没有记录':
                                     pass
                                 else:
+                                    try:
+                                        zw = li[2].text
+                                    except:
+                                        zw = ''
+                                    try:
+                                        zc = li[3].text
+                                    except:
+                                        zc = ''
+                                    try:
+                                        zsmc = li[4].text
+                                    except:
+                                        zsmc = ''
+                                    try:
+                                        zsbh = li[5].text
+                                    except:
+                                        zsbh = ''
+                                    try:
+                                        zszy = li[6].text
+                                    except:
+                                        zszy = ''
+                                    try:
+                                        dj = li[7].text
+                                    except:
+                                        dj = ''
                                     zw_msg = {
                                         'gsmc': gsmc,
                                         'link': url,
                                         'xmmc': xmmc,
                                         'name': name,
-                                        'zw': li[2].text,
-                                        'zc': li[3].text,
-                                        'zsmc': li[4].text,
-                                        'zsbh': li[5].text,
-                                        'zszy': li[6].text,
-                                        'dj': li[7].text,
+                                        'zw': zw,
+                                        'zc': zc,
+                                        'zsmc': zsmc,
+                                        'zsbh': zsbh,
+                                        'zszy': zszy,
+                                        'dj': dj,
                                     }
                                     ry_list.append(zw_msg)
 
@@ -82,17 +107,41 @@ def slj_yj_detail(response):
                                 if jxmc == '没有记录':
                                     pass
                                 else:
+                                    try:
+                                        jxlb = li[1].text
+                                    except:
+                                        jxlb = ''
+                                    try:
+                                        jxjb = li[2].text
+                                    except:
+                                        jxjb = ''
+                                    try:
+                                        jxdb = li[3].text
+                                    except:
+                                        jxdb = ''
+                                    try:
+                                        bjdw = li[4].text
+                                    except:
+                                        bjdw = ''
+                                    try:
+                                        bjwh = li[5].text
+                                    except:
+                                        bjwh = ''
+                                    try:
+                                        bjsj = li[6].text
+                                    except:
+                                        bjsj = ''
                                     hj_msg = {
                                         'gsmc': gsmc,
                                         'xmmc': xmmc,
                                         'jxmc': jxmc,
                                         'link': url,
-                                        'jxlb': li[1].text,
-                                        'jxjb': li[2].text,
-                                        'jxdb': li[3].text,
-                                        'bjdw': li[4].text,
-                                        'bjwh': li[5].text,
-                                        'bjsj': li[6].text,
+                                        'jxlb': jxlb,
+                                        'jxjb': jxjb,
+                                        'jxdb': jxdb,
+                                        'bjdw': bjdw,
+                                        'bjwh': bjwh,
+                                        'bjsj': bjsj,
                                     }
                                     hj_list.append(hj_msg)
 

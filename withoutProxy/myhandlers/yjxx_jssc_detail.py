@@ -14,12 +14,15 @@ def get(url):
     i = 0
     while True:
         try:
-            requests1 = requests.get(url,timeout=60)
-            return requests1
+            requests1 = requests.get(url, timeout=60)
+            if requests1.status_code == 200:
+                return requests1
+            else:
+                i = 1 / 0
         except:
             print("访问链接失败重试..."+url+"")
             i = i+1
-            if i == 5:
+            if i == 10:
                 break
             pass
 #访问psot
@@ -28,10 +31,14 @@ def post(url,data):
     while True:
         try:
             requests1 = requests.post(url,data=data,timeout=10)
-            return requests1
+            if requests1.status_code == 200:
+                return requests1
+            else:
+                i = 1 / 0
         except:
+            print("访问链接失败重试..." + url + "")
             i = i + 1
-            if i == 5:
+            if i == 10:
                 break
             pass
 

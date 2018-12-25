@@ -32,7 +32,8 @@ __all__ = [
     # 'hubei_geturls_detail_item',
     # 'hunan_geturls_detail_item',
     # 'yunnan_geturls_detail_item',
-    # 'allcountry_info_detail_item',#全国奖惩记录
+    'allcountry_info_detail_item',#全国奖惩记录
+    'gljs_jbxx_detail_item',#公路建设--基本信息
     # 'scjst_info_detail_item', # 四川建设厅---通知通告详情
     # 'hljzb_info_detail_item', # 黑龙江采集网---采集公告
     # 'cjw_heilongjiang_detail_item',  # 黑龙江采集网--招标url
@@ -44,10 +45,12 @@ __all__ = [
     # 'cjw_tianjin_detail_item',# 天津采集网---招标url
     # 'cjw_jilin_detail_item',
     # 'cjw_neimenggu_detail_item',# 内蒙古采集网---
-    # 'gljs_ry_detail_item', # 全国公路建设市场公司人员
-    # 'gljs_id_detail_item', # 全国公路建设市场公司id
-    # 'yjxx_jssc_detail_item',#全国公路建设市场(业绩信息)
+    'gljs_ry_detail_item', # 全国公路建设市场公司人员
+    'gljs_id_detail_item', # 全国公路建设市场公司id
+    'yjxx_jssc_detail_item',#全国公路建设市场(业绩信息)
     'slj_yj_detail_item',  # 水利局业绩
     'sljs_jbxx_detail_item',#水利建设(基本信息+信用评价)
     'slj_ry_detail_item',  # 水利建设--人员
+    'slj_goodrecord_detail_item',#水利建设--良好记录
+    'slj_id_detail_item',# 水利建设--公司id
 ]

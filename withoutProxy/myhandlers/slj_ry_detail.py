@@ -37,17 +37,16 @@ def slj_ry_detail(response):
             data_sl = data.xpath('a/span/text()')[0].strip()[1:-1]
         except:
             data_sl = 0
-        if data_mc !='行政与技术负责人':
-            slj_lb = {
-                's_type':data_mc,
-                'total':data_sl
-            }
-            lsj_lb_list.append(slj_lb)
         url = 'http://rcpu.cwun.org/General/'+data_url+data_id
         response = requests.get(url=url)
-        if response.status_code ==200:
-            html = response.text
-            content = etree.HTML(html)
+        if response.status_code ==200 and response.text != '':
+            if data_mc != '行政与技术负责人':
+                slj_lb = {
+                    's_type': data_mc,
+                    'total': data_sl
+                }
+                lsj_lb_list.append(slj_lb)
+            content = etree.HTML(response.text)
             # 其他类别
             qtlb = content.xpath('//*[@id="form1"]/div/text()')[1].strip()
             if qtlb == '水利工程建设监理员':
@@ -537,7 +536,7 @@ def slj_ry_detail(response):
                     tmp_data = tmp(cj_id,link,gsmc)
 
             elif qtlb == '中级以上职称人员（水利水电专业）':
-                for slj_jsy in content.xpath('//*[@id="form1"]/table/tr'):
+                for slj_jsy in content.xpath('//*[@id="form1"]/table/tbody/tr'):
                     tmp_data['ry_type'] = '中级以上职称人员（水利水电专业）'
                     tmp_data['xm'] = slj_jsy.xpath('td[2]/text()')[0].strip()
                     try:

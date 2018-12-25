@@ -47,5 +47,8 @@ __all__ = [
 	'yjxx_jssc_detail_pipline',#全国公路建设市场(业绩信息)
     'sljs_jbxx_detail_pipline',#全国水利建设(基本信息+信用评价)
     'slj_ry_detail_pipline',# 水利建设---人员
+    'slj_goodrecord_detail_pipline',#水利建设 -- 良好记录
+    'slj_yj_detail_pipline',#水利建设 -- 业绩
+    'slj_id_detail_pipline',# 水利建设--公司id
 
 ]

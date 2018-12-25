@@ -41,7 +41,7 @@ class MasterSpider(RedisSpider):
                 host = MYSQL_HOST,
                 user =  MYSQL_USER,
                 password =  MYSQL_PASSWORD,
-                db =  MYSQL_DB,
+                db = MYSQL_DB,
                 charset =  MYSQL_CHATSET,
                 port =  MYSQL_PORT
             )
